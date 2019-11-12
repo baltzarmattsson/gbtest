@@ -11,15 +11,14 @@ export class AppComponent {
 
 	private wisibel: Wisibel = new Wisibel();
 
+	// Corresponds to: https://wisibel.com/c/{tenantSlug}/{configuratorSlug}
 	private tenantSlug: string = "gobrave";
-
 	private configurator1Slug: string = "boattester";
 	private configurator2Slug: string = "boattester2";
 
 	private wisibelContainer: HTMLElement;
 
 	ngOnInit() {
-
 
 	}
 
@@ -30,20 +29,23 @@ export class AppComponent {
 
 	public loadConfigurator1() {
 		this.initWisibelConfigurator(this.configurator1Slug);
-
 	}
 
 	public loadConfigurator2() {
 		this.initWisibelConfigurator(this.configurator2Slug);
 	}
 
+	private resetMenuButtonsByText() {
+		// Reseting menu buttons since 
+		this.menuButtonsByText = null;
+	}
+
 	public menuButtonsByText: { [nameEN: string]: MenuButton } = null;
 
 	private initWisibelConfigurator(configuratorSlug: string) {
 
-		console.log(this.wisibelContainer);
-
-		this.menuButtonsByText = null;
+		// Reseting menu buttons since they are configurator unique
+		this.resetMenuButtonsByText();
 
 		this.wisibel.initConfigurator({
 			configuratorSlug: configuratorSlug,
@@ -55,24 +57,22 @@ export class AppComponent {
 			rendererElement: this.wisibelContainer,
 			cb: () => {
 				console.log("on wisibel loaded");
-
 			},
 		})
 	}
 
+	// Key value store menu buttons by text
 	private onWisibelMenuFetched(menu: Menu) {
 
 		let menuButtonsByText = {};
 
-		menu.ButtonSections.forEach(bs => {
-			bs.MenuButtons.forEach(mb => {
-				menuButtonsByText[mb.TextEN] = mb;
-			})
-		})
+		menu.ButtonSections.forEach(buttonSection => {
+			buttonSection.MenuButtons.forEach(menuButton => {
+				menuButtonsByText[menuButton.TextEN] = menuButton;
+			});
+		});
 
-		// setTimeout(() => {
 		this.menuButtonsByText = menuButtonsByText;
-		// }, 0);
 	}
 
 	loadMenuButton(menuButtonTextEN: string) {
@@ -99,7 +99,8 @@ export class AppComponent {
 	]
 
 	/**
-	 * Both motor components (diesel & electric) have context name 'motor' in wisibel
+	 * Both motor components (diesel & electric) have context name 'motor' in wisibel,
+	 * and finds the one that's loaded or ignores if cant find
 	 */
 	changeMotorColor(colorName: string) {
 		this.wisibel.swapDesignMaterialInComponentByContextName(colorName, "motor");
