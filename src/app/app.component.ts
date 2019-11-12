@@ -91,12 +91,14 @@ export class AppComponent {
 		this.wisibel.swapDesignInComponentByContextName(motorName, "all_motors");
 	}
 
+
+	// Both motors (diesel & electric) have these colors
 	public availableMotorColors: string[] = [
 		"Blue",
 		"Green",
 		"Purple",
 		"Red"
-	]
+	];
 
 	/**
 	 * Both motor components (diesel & electric) have context name 'motor' in wisibel,
