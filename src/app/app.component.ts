@@ -59,7 +59,7 @@ export class AppComponent {
 			rendererElement: this.wisibelContainer,
 			cb: () => {
 				// this.wisibel.setQuality("low");
-				console.log("on wisibel loaded");
+				// console.log("on wisibel loaded");
 				setTimeout(() => {
 					// this.changeCameras();
 				}, 200);
