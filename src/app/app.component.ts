@@ -12,8 +12,8 @@ export class AppComponent {
 	private wisibel: Wisibel = new Wisibel();
 
 	// Corresponds to: https://wisibel.com/c/{tenantSlug}/{configuratorSlug}
-	private tenantSlug: string = "gobrave";
-	private configurator1Slug: string = "boattester";
+	private tenantSlug: string = "linder";
+	private configurator1Slug: string = "530arkip";
 	private configurator2Slug: string = "boattester2";
 
 	private wisibelContainer: HTMLElement;
@@ -47,18 +47,41 @@ export class AppComponent {
 		// Reseting menu buttons since they are configurator unique
 		this.resetMenuButtonsByText();
 
+
 		this.wisibel.initConfigurator({
 			configuratorSlug: configuratorSlug,
 			tenantSlug: this.tenantSlug,
 			menuCb: (menu: Menu) => {
 				this.onWisibelMenuFetched(menu);
 			},
+			quality: "low",
 			onContextNameClicked: () => { },
 			rendererElement: this.wisibelContainer,
 			cb: () => {
+				// this.wisibel.setQuality("low");
 				console.log("on wisibel loaded");
+				setTimeout(() => {
+					// this.changeCameras();
+				}, 200);
 			},
 		})
+	}
+	private cameras: string[] = ["Vattenskidbåge", "Motor", "Dynor", "Fiskedäck"];l
+	private cameraIndex: number = 0;
+	
+	private low: boolean = false;
+	private changeCameras() {
+		setInterval(() => {
+			
+			this.wisibel.setQuality(this.low ? "high" : "low");
+			this.low = !this.low;
+			
+			// let camera = this.cameras[this.cameraIndex];
+			// this.wisibel.clickMenuButtonByTextEN(camera);
+			// this.cameraIndex++;
+			// if (this.cameraIndex == this.cameras.length)
+			// 	this.cameraIndex = 0;
+		}, 2500);
 	}
 
 	// Key value store menu buttons by text
@@ -73,6 +96,12 @@ export class AppComponent {
 		});
 
 		this.menuButtonsByText = menuButtonsByText;
+	}
+
+	public clickMenuButtonByText(text: string) {
+		if (text) {
+			this.wisibel.clickMenuButtonByTextEN(text);
+		}
 	}
 
 	loadMenuButton(menuButtonTextEN: string) {
