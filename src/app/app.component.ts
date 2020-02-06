@@ -13,8 +13,8 @@ export class AppComponent {
 
 	// Corresponds to: https://wisibel.com/c/{tenantSlug}/{configuratorSlug}
 	private tenantSlug: string = "linder";
-	private configurator1Slug: string = "530arkip";
-	private configurator2Slug: string = "boattester2";
+	private configurator1Slug: string = "530000";
+	private configurator2Slug: string = "525000";
 
 	private wisibelContainer: HTMLElement;
 
@@ -54,7 +54,7 @@ export class AppComponent {
 			menuCb: (menu: Menu) => {
 				this.onWisibelMenuFetched(menu);
 			},
-			quality: "low",
+			quality: "high",
 			onContextNameClicked: () => { },
 			rendererElement: this.wisibelContainer,
 			cb: () => {
@@ -66,16 +66,16 @@ export class AppComponent {
 			},
 		})
 	}
-	private cameras: string[] = ["Vattenskidbåge", "Motor", "Dynor", "Fiskedäck"];l
+	private cameras: string[] = ["Vattenskidbåge", "Motor", "Dynor", "Fiskedäck"]; l
 	private cameraIndex: number = 0;
-	
+
 	private low: boolean = false;
 	private changeCameras() {
 		setInterval(() => {
-			
+
 			this.wisibel.setQuality(this.low ? "high" : "low");
 			this.low = !this.low;
-			
+
 			// let camera = this.cameras[this.cameraIndex];
 			// this.wisibel.clickMenuButtonByTextEN(camera);
 			// this.cameraIndex++;
@@ -83,6 +83,8 @@ export class AppComponent {
 			// 	this.cameraIndex = 0;
 		}, 2500);
 	}
+
+	private stateForBtn: { [btnTextEN: string]: boolean } = {};
 
 	// Key value store menu buttons by text
 	private onWisibelMenuFetched(menu: Menu) {
@@ -92,10 +94,20 @@ export class AppComponent {
 		menu.ButtonSections.forEach(buttonSection => {
 			buttonSection.MenuButtons.forEach(menuButton => {
 				menuButtonsByText[menuButton.TextEN] = menuButton;
+				this.stateForBtn[menuButton.TextEN] = false;
 			});
 		});
 
 		this.menuButtonsByText = menuButtonsByText;
+	}
+
+
+	public onMenuButtonClick(text: string) {
+		this.clickMenuButtonByText(text);
+		let on: boolean = !this.stateForBtn[text];
+
+		this.wisibel.swapDesignInComponentByContextName(on + "", text);
+		this.stateForBtn[text] = on;
 	}
 
 	public clickMenuButtonByText(text: string) {

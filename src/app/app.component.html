@@ -1,31 +1,22 @@
 <div id="container">
-    <div
-        id="wisibelContainer"
-        #wisibelContainer
-    ></div>
-    <div id="menuContainer">
-        <p>Swap configurators</p>
-        <button (click)="loadConfigurator1()">Load configurator 1</button>
-        <button (click)="loadConfigurator2()">Load configurator 2</button>
+	<div
+		id="wisibelContainer"
+		#wisibelContainer
+	></div>
+	<div id="menuContainer">
+		<p>Swap configurators</p>
+		<button (click)="loadConfigurator1()">Load configurator 1</button>
+		<button (click)="loadConfigurator2()">Load configurator 2</button>
 
-        <p>Change views</p>
-        <div *ngIf="menuButtonsByText">
-            <button (click)="loadMenuButton('boat')">Boat view</button>
-            <button (click)="loadMenuButton('motorselection')">Motor selection view</button>
-            <button (click)="loadMenuButton('motorcolor')">Motor color view</button>
-        </div>
+		<div style="max-height: 50vh; overflow-y: auto">
+			<button
+				*ngFor="let kv of menuButtonsByText | keyvalue"
+				(click)="onMenuButtonClick(kv.key)"
+			>
+				{{kv.key}}
+			</button>
+		</div>
 
-        <p>Motor</p>
-        <button (click)="loadMotor('nomotor')">Remove motor</button>
-        <button (click)="loadMotor('diesel123')">Load diesel motor</button>
-        <button (click)="loadMotor('electric445')">Load electric motor</button>
 
-        <p>Motor color</p>
-        <button
-            *ngFor="let color of availableMotorColors"
-            (click)="changeMotorColor(color)"
-        >
-            {{ color}} motor color
-        </button>
-    </div>
+	</div>
 </div>
