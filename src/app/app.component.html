@@ -6,22 +6,38 @@
     <div id="menuContainer">
         <p>Swap configurators</p>
         <button (click)="loadConfigurator1()">Load configurator 1</button>
-        <button (click)="loadConfigurator2()">Load configurator 2</button>
+        <!-- <button (click)="loadConfigurator2()">Load configurator 2</button> -->
 
-        <div style="max-height: 50vh; overflow-y: auto">
+        <!-- <div style="max-height: 50vh; overflow-y: auto">
             <button
                 *ngFor="let kv of menuButtonsByText | keyvalue"
                 (click)="onMenuButtonClick(kv.key)"
             >
                 {{kv.key}}
             </button>
+        </div> -->
+
+        <!-- <button (click)="onClickContextName('motor')">Click ctx 'motor'</button> -->
+
+        <div class="section">
+            <h3>Motor</h3>
+            <button
+                class="entry"
+                *ngFor="let engine of engines"
+                (click)="onEngineClick(engine)"
+            >
+
+                <p>{{engine.text}}</p>
+                <span style="opacity: 0.7">{{engine.sku}}</span>
+            </button>
+            <!-- <button class="entry" (click)="onEngineClick('199MF100ELPTEFI')">
+                <p>Mercury f100 elpt efi 133 000 kr</p>
+            </button> -->
         </div>
 
-        <button (click)="onClickContextName('motor')">Click ctx 'motor'</button>
-
-        <div *ngFor="let option of optionsForContextName">
+        <!-- <div *ngFor="let option of optionsForContextName">
             <button (click)="onDesignClick(option)">{{option.NameEN}}</button>
-        </div>
+        </div> -->
 
     </div>
 </div>

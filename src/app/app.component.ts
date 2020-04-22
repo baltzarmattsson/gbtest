@@ -14,9 +14,28 @@ export class AppComponent {
 	// Corresponds to: https://wisibel.com/c/{tenantSlug}/{configuratorSlug}
 	private tenantSlug: string = "linder";
 	private configurator1Slug: string = "530000";
-	private configurator2Slug: string = "525000";
+	// private configurator2Slug: string = "525000";
 
 	private wisibelContainer: HTMLElement;
+
+	public engines: Engine[] = [
+		{
+			text: "MERCURY F100 ELPT EFI",
+			sku: "199MF100ELPTEFI"
+		},
+		{
+			text: "MERCURY F80 ELPT EFI",
+			sku: "199MF80ELPTEFI"
+		},
+		{
+			text: "YAMAHA F100 FETL",
+			sku: "199YF100FETL"
+		},
+		{
+			text: "YAMAHA F80 DETL",
+			sku: "199YF80DETL"
+		}
+	]
 
 	ngOnInit() {
 
@@ -31,9 +50,9 @@ export class AppComponent {
 		this.initWisibelConfigurator(this.configurator1Slug);
 	}
 
-	public loadConfigurator2() {
-		this.initWisibelConfigurator(this.configurator2Slug);
-	}
+	// public loadConfigurator2() {
+	// 	this.initWisibelConfigurator(this.configurator2Slug);
+	// }
 
 	private resetMenuButtonsByText() {
 		// Reseting menu buttons since 
@@ -58,11 +77,12 @@ export class AppComponent {
 			onContextNameClicked: () => { },
 			rendererElement: this.wisibelContainer,
 			cb: () => {
-				// this.wisibel.setQuality("low");
-				// console.log("on wisibel loaded");
-				setTimeout(() => {
-					// this.changeCameras();
-				}, 200);
+				console.log("CB CALLED");
+				
+				// setTimeout(() => {
+					
+					this.onEngineClick(this.engines[0])
+				// }, 2000);
 			},
 		})
 	}
@@ -160,4 +180,11 @@ export class AppComponent {
 		this.wisibel.swapDesignMaterialInComponentByContextName(colorName, "motor");
 	}
 
+	onEngineClick(engine: Engine) {
+		this.wisibel.swapDesignInComponentByContextName(engine.sku, "motor");
+	}
+}
+export interface Engine {
+	text: string;
+	sku: string;
 }
