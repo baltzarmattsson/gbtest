@@ -1,22 +1,27 @@
 <div id="container">
-	<div
-		id="wisibelContainer"
-		#wisibelContainer
-	></div>
-	<div id="menuContainer">
-		<p>Swap configurators</p>
-		<button (click)="loadConfigurator1()">Load configurator 1</button>
-		<button (click)="loadConfigurator2()">Load configurator 2</button>
+    <div
+        id="wisibelContainer"
+        #wisibelContainer
+    ></div>
+    <div id="menuContainer">
+        <p>Swap configurators</p>
+        <button (click)="loadConfigurator1()">Load configurator 1</button>
+        <button (click)="loadConfigurator2()">Load configurator 2</button>
 
-		<div style="max-height: 50vh; overflow-y: auto">
-			<button
-				*ngFor="let kv of menuButtonsByText | keyvalue"
-				(click)="onMenuButtonClick(kv.key)"
-			>
-				{{kv.key}}
-			</button>
-		</div>
+        <div style="max-height: 50vh; overflow-y: auto">
+            <button
+                *ngFor="let kv of menuButtonsByText | keyvalue"
+                (click)="onMenuButtonClick(kv.key)"
+            >
+                {{kv.key}}
+            </button>
+        </div>
 
+        <button (click)="onClickContextName('motor')">Click ctx 'motor'</button>
 
-	</div>
+        <div *ngFor="let option of optionsForContextName">
+            <button (click)="onDesignClick(option)">{{option.NameEN}}</button>
+        </div>
+
+    </div>
 </div>

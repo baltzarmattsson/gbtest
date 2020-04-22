@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Wisibel, MenuButton, Menu } from "wisibel";
+import { Wisibel, MenuButton, Menu, Design } from "wisibel";
 
 @Component({
 	selector: 'app-root',
@@ -132,6 +132,17 @@ export class AppComponent {
 		this.wisibel.swapDesignInComponentByContextName(motorName, "all_motors");
 	}
 
+	public optionsForContextName: Design[] = [];
+
+	public onClickContextName(ctxname: string) {
+		this.wisibel.clickMenuButtonByTextEN(ctxname);
+
+		this.optionsForContextName = this.wisibel.getDesignsForContextName(ctxname);
+	}
+
+	onDesignClick(design: Design) {
+		this.wisibel.swapDesignByDesignModel(design);
+	}
 
 	// Both motors (diesel & electric) have these colors
 	public availableMotorColors: string[] = [
