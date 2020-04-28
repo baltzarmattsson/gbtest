@@ -78,10 +78,10 @@ export class AppComponent {
 			rendererElement: this.wisibelContainer,
 			cb: () => {
 				console.log("CB CALLED");
-				
+
 				// setTimeout(() => {
-					
-					this.onEngineClick(this.engines[0])
+
+				this.onEngineClick(this.engines[0])
 				// }, 2000);
 			},
 		})
